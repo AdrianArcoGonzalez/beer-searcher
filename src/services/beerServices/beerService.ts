@@ -1,4 +1,4 @@
-import { apiEndPoints } from "../../../configs/environments";
+import { apiEndPoints } from "../../configs/environments";
 import { BeerStructure } from "../../interfaces/beersInterfaces";
 import customRequest from "../../utils/customRequest";
 
@@ -30,7 +30,7 @@ export async function getRandomBeerService(): Promise<{
     },
   );
   if (success) {
-    return { success, data: (data as BeerStructure[])[0] as BeerStructure };
+    return { success, data: (data as BeerStructure[])[0] };
   }
 
   return { error, success };

@@ -1,4 +1,4 @@
-import axiosInstance from "../../configs/axios";
+import axiosInstance from "../configs/axios";
 
 export type MethodType = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
@@ -13,7 +13,7 @@ export interface CustomResponseStructure {
 }
 const customRequest = async (
   enpoint: string,
-  configs: { method?: MethodType } = {}
+  configs: { method?: MethodType } = {},
 ): Promise<CustomResponseStructure> => {
   try {
     const response = await axiosInstance(enpoint, {
