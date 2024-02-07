@@ -1,8 +1,13 @@
-import { getBeersService, getRandomBeerService } from "./beerService";
+import {
+  getRandomBeerService,
+  searchBeersService,
+  getRandomNonAlcoholicBeerService,
+} from "./beerService";
 
 const beerServices = {
-  getBeers: getBeersService,
   getRandomBeer: getRandomBeerService,
+  getRandomNonAlcoholicBeer: getRandomNonAlcoholicBeerService,
+  searchBeers: searchBeersService,
 };
 
 export default beerServices;

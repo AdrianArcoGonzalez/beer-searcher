@@ -1,6 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import useBeer from "./useBeer";
 import beerServices from "../../services/beerServices";
+import { beerWithNameAndDescription } from "../../utils/BeerUtils";
 
 jest.mock("../../services/beerServices");
 
@@ -32,7 +33,7 @@ describe("Given a useBeer hook", () => {
       expect(getRandomBeerResult).toEqual(mockBeerResponseOk.data);
     });
 
-    test("Then it should call the beerService and return the data if success", async () => {
+    test("Then it should call the beerService and return the data if success false", async () => {
       (beerServices.getRandomBeer as jest.Mock).mockResolvedValue(
         mockBeerResponseKo,
       );
@@ -45,7 +46,41 @@ describe("Given a useBeer hook", () => {
       const getRandomBeerResult = await getRandomBeer();
 
       expect(beerServices.getRandomBeer).toHaveBeenCalled();
-      expect(getRandomBeerResult).toEqual({});
+      expect(getRandomBeerResult).toEqual(beerWithNameAndDescription);
+    });
+  });
+
+  describe("When it is called with method getRandomNonAlcoholicBeer", () => {
+    test("Then it should call the beerService and return the data if success", async () => {
+      (beerServices.getRandomNonAlcoholicBeer as jest.Mock)
+        .mockResolvedValueOnce(mockBeerResponseOkIncomplete)
+        .mockResolvedValueOnce(mockBeerResponseOk);
+      const {
+        result: {
+          current: { getRandomNonAlcoholicBeer },
+        },
+      } = renderHook(() => useBeer());
+
+      const getRandomBeerResult = await getRandomNonAlcoholicBeer();
+
+      expect(beerServices.getRandomNonAlcoholicBeer).toHaveBeenCalled();
+      expect(getRandomBeerResult).toEqual(mockBeerResponseOk.data);
+    });
+
+    test("Then it should call the beerService and return the data if success false", async () => {
+      (beerServices.getRandomNonAlcoholicBeer as jest.Mock).mockResolvedValue(
+        mockBeerResponseKo,
+      );
+      const {
+        result: {
+          current: { getRandomNonAlcoholicBeer },
+        },
+      } = renderHook(() => useBeer());
+
+      const getRandomBeerResult = await getRandomNonAlcoholicBeer();
+
+      expect(beerServices.getRandomNonAlcoholicBeer).toHaveBeenCalled();
+      expect(getRandomBeerResult).toEqual(beerWithNameAndDescription);
     });
   });
 });

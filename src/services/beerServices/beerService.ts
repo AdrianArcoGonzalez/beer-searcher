@@ -8,16 +8,6 @@ export interface CustomResponseStructure {
   error?: string;
 }
 
-export async function getBeersService(): Promise<CustomResponseStructure> {
-  const { data, error, success } = await customRequest(apiEndPoints.getBeers, {
-    method: "GET",
-  });
-
-  if (success) return { success, data: data as BeerStructure[] };
-
-  return { error, success };
-}
-
 export async function getRandomBeerService(): Promise<{
   success: boolean;
   data?: BeerStructure;
@@ -35,3 +25,39 @@ export async function getRandomBeerService(): Promise<{
 
   return { error, success };
 }
+export async function getRandomNonAlcoholicBeerService(): Promise<{
+  success: boolean;
+  data?: BeerStructure;
+  error?: string;
+}> {
+  const { data, error, success } = await customRequest(
+    apiEndPoints.getRandomNonAlcoholicBeer,
+    {
+      method: "GET",
+    },
+  );
+  if (success) {
+    return { success, data: (data as BeerStructure[])[0] };
+  }
+
+  return { error, success };
+}
+
+export const searchBeersService = async (
+  textToSearch: string,
+  type: "name" | "brewed",
+  page?: number,
+): Promise<{
+  success: boolean;
+  data?: BeerStructure[];
+  error?: string;
+}> => {
+  const { data, error, success } = await customRequest(
+    apiEndPoints.searchBeers(textToSearch, type, page),
+  );
+  if (success) {
+    return { success, data: data as BeerStructure[] };
+  }
+
+  return { error, success };
+};
