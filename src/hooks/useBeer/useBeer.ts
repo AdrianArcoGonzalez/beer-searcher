@@ -1,18 +1,11 @@
 import { useCallback, useState } from "react";
 import { BeerStructure } from "../../interfaces/beersInterfaces";
 import beerServices from "../../services/beerServices";
+import { beerWithNameAndDescription, partialBeer } from "../../utils/BeerUtils";
 
 const useBeer = () => {
   const [isLoadingRandomBeer, setIsLoadingRandomBeer] = useState(false);
-  const getBeers = async (): Promise<BeerStructure[] | string> => {
-    const { success, data } = await beerServices.getBeers();
-
-    if (success) {
-      return data as BeerStructure[];
-    }
-
-    return [];
-  };
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
   const getRandomBeer = useCallback(
     async function getRandomBeer(): Promise<BeerStructure> {
@@ -29,17 +22,70 @@ const useBeer = () => {
         setIsLoadingRandomBeer(false);
         return data as BeerStructure;
       } else if (error) {
-        return {} as BeerStructure;
+        return beerWithNameAndDescription;
       } else {
         return getRandomBeer();
       }
     },
     [],
   );
+  const getRandomNonAlcoholicBeer = useCallback(
+    async function getRandomNonAlcoholicBeer() {
+      setIsLoadingRandomBeer(true);
+      const { success, data, error } =
+        await beerServices.getRandomNonAlcoholicBeer();
+      if (
+        success &&
+        data?.image_url &&
+        data.name &&
+        data.description &&
+        !error
+      ) {
+        setIsLoadingRandomBeer(false);
+        return data as BeerStructure;
+      } else if (error) {
+        setIsLoadingRandomBeer(false);
+
+        return beerWithNameAndDescription;
+      } else {
+        return getRandomNonAlcoholicBeer();
+      }
+    },
+    [],
+  );
+
+  const searchBeers = useCallback(
+    async (
+      textToSearch: string,
+      type: "brewed" | "name",
+      page?: number,
+    ): Promise<BeerStructure[]> => {
+      setIsLoadingSearch(true);
+
+      const { data, success } = await beerServices.searchBeers(
+        textToSearch,
+        type,
+        page,
+      );
+
+      if (success) {
+        setIsLoadingSearch(false);
+
+        return data as BeerStructure[];
+      }
+
+      setIsLoadingSearch(false);
+
+      return [partialBeer];
+    },
+    [],
+  );
 
   return {
+    isLoadingSearch,
+    getRandomNonAlcoholicBeer,
+    searchBeers,
     getRandomBeer,
-    getBeers,
     isLoadingRandomBeer,
   };
 };
