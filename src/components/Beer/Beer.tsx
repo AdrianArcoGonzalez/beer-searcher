@@ -17,8 +17,11 @@ const Beer = ({ beer, isSearch }: BeerPropsStructure): JSX.Element => {
       <div className="beer_dataContainer">
         {isSearch && (
           <ul className="beer_dataList">
-            <li className="beer_tagline" key={beer.first_brewed}>
+            <li key={beer.first_brewed}>
               <span>First Brewed Date: {beer.first_brewed}</span>
+            </li>
+            <li key={beer.abv}>
+              <span>Alcohol By Volume: {beer.abv}</span>
             </li>
             <li className="beer_paringData" key={beer.food_pairing[0]}>
               <span>Ideal for pairing with</span>
