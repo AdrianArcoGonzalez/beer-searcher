@@ -22,6 +22,8 @@ const useBeer = () => {
         setIsLoadingRandomBeer(false);
         return data as BeerStructure;
       } else if (error) {
+        setIsLoadingRandomBeer(false);
+
         return beerWithNameAndDescription;
       } else {
         return getRandomBeer();
