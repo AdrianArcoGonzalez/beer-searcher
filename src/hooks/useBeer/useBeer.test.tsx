@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import useBeer from "./useBeer";
 import beerServices from "../../services/beerServices";
-import { beerWithNameAndDescription } from "../../utils/BeerUtils";
+import { beerWithNameAndDescription, partialBeer } from "../../utils/BeerUtils";
 
 jest.mock("../../services/beerServices");
 
@@ -81,6 +81,72 @@ describe("Given a useBeer hook", () => {
 
       expect(beerServices.getRandomNonAlcoholicBeer).toHaveBeenCalled();
       expect(getRandomBeerResult).toEqual(beerWithNameAndDescription);
+    });
+  });
+
+  describe("When it is called with method isValidString", () => {
+    test("Then it return true if it's valid", async () => {
+      const stringToTest = "test string";
+      const {
+        result: {
+          current: { isValidSearchString },
+        },
+      } = renderHook(() => useBeer());
+
+      const result = isValidSearchString(stringToTest);
+
+      expect(result).toBe(true);
+    });
+
+    test("And return false if it's not valid", async () => {
+      const stringToTest = "test////string";
+
+      const {
+        result: {
+          current: { isValidSearchString },
+        },
+      } = renderHook(() => useBeer());
+
+      const result = await isValidSearchString(stringToTest);
+
+      expect(result).toBe(false);
+    });
+  });
+
+  describe("When it is called with method searchBeers", () => {
+    const text = "test";
+    const type = "name";
+    const page = 1;
+    test("Then it should call the beerService and return the data if success", async () => {
+      (beerServices.searchBeers as jest.Mock).mockResolvedValueOnce(
+        mockBeerResponseOk,
+      );
+      const {
+        result: {
+          current: { searchBeers },
+        },
+      } = renderHook(() => useBeer());
+
+      const getRandomBeerResult = await searchBeers(text, type, page);
+
+      expect(beerServices.searchBeers).toHaveBeenCalled();
+      expect(getRandomBeerResult).toEqual(mockBeerResponseOk.data);
+    });
+
+    test("Then it should call the beerService and return the data if success false", async () => {
+      (beerServices.searchBeers as jest.Mock).mockResolvedValue(
+        mockBeerResponseKo,
+      );
+      const {
+        result: {
+          current: { searchBeers },
+        },
+      } = renderHook(() => useBeer());
+
+      const getRandomBeerResult = await searchBeers(text, type, page);
+
+      expect(beerServices.searchBeers).toHaveBeenCalled();
+      expect(getRandomBeerResult).toEqual([partialBeer]);
     });
   });
 });
