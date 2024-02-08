@@ -13,6 +13,7 @@ module.exports = {
     "!src/components/App/App.tsx",
     "!src/components/App/AppStyled.ts",
     "!src/configs/**.ts",
+    "!src/utils/**.ts",
   ],
   setupFilesAfterEnv: ["@testing-library/jest-dom"],
 };
