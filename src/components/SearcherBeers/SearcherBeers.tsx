@@ -107,9 +107,9 @@ const SearcherBeers = () => {
       <Pagination
         previousPageAction={() => handleDown(page)}
         page={page}
-        nextPageAction={() => handleUp(page, beersFound)}
+        nextPageAction={() => handleUp(page)}
         previousDisabled={page === 1}
-        nextDisabled={beersFound.length < 10}
+        nextDisabled={beersFound.length < 10 || beersFound.length === 0}
       />
     </SearcherBeersStyled>
   );
