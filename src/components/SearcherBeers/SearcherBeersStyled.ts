@@ -26,26 +26,33 @@ const SearcherBeersStyled = styled.section`
     }
   }
   .form {
-    &__input_text {
-      padding: 10px;
-      border: 1px solid black;
+    &__input {
+      &_radio {
+        height: 20px;
+        width: 20px;
+        margin-right: 10px;
+      }
 
-      &__error {
+      &_text {
         padding: 10px;
-        border-color: red;
+        border: 1px solid black;
+
+        &__error {
+          padding: 10px;
+          border: 1px solid red;
+        }
       }
     }
+
     &__inputLabel {
-      gap: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-left: 10px;
     }
 
     &__radioInputsContainer {
       display: flex;
-      gap: 20px;
+      gap: 10px;
       justify-content: center;
       align-items: center;
     }
@@ -54,6 +61,11 @@ const SearcherBeersStyled = styled.section`
       color: red;
       font-weight: bold;
     }
+  }
+  .results-title {
+    width: 100%;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
   }
 `;
 

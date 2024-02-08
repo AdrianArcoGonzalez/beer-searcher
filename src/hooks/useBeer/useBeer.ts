@@ -7,6 +7,17 @@ const useBeer = () => {
   const [isLoadingRandomBeer, setIsLoadingRandomBeer] = useState(false);
   const [isLoadingSearch, setIsLoadingSearch] = useState(false);
 
+  const isValidSearchString = useCallback((searchText: string): boolean => {
+    if (searchText.length === 0) return true;
+    const regex = /^[a-zA-Z0-9\- ]+$/;
+
+    if (regex.test(searchText)) {
+      return true;
+    } else {
+      return false;
+    }
+  }, []);
+
   const getRandomBeer = useCallback(
     async function getRandomBeer(): Promise<BeerStructure> {
       setIsLoadingRandomBeer(true);
@@ -84,6 +95,7 @@ const useBeer = () => {
   );
 
   return {
+    isValidSearchString,
     isLoadingSearch,
     getRandomNonAlcoholicBeer,
     searchBeers,

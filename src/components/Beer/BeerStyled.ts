@@ -8,7 +8,7 @@ const BeerStyled = styled.article`
   gap: 20px;
 
   @media (min-width: 800px) {
-    height: 200px;
+    min-height: 200px;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;

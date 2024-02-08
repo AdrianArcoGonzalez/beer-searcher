@@ -33,10 +33,3 @@ const Pagination = ({
   );
 };
 export default Pagination;
-//  <Pagination
-//    previousPageAction={() => handleDown(page)}
-//    page={page}
-//    nextPageAction={() => handleUp(page, beersFound)}
-//    previousDisabled={page === 1}
-//    nextDisabled={beersFound.length < 10}
-//  />;
