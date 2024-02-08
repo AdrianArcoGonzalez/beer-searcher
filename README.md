@@ -23,7 +23,7 @@ Welcome to the Beer Explorer app, a delightful application crafted with Vite, Re
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/your-username/beer-explorer.git
+   git clone https://github.com/AdrianArcoGonzalez/beer-searcher
    ```
 
 2. **Run the Project:**
