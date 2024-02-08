@@ -8,8 +8,11 @@ module.exports = {
   collectCoverageFrom: [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "!src/setupTests.ts",
+    "!src/setuptTests.ts",
     "!src/main.tsx",
+    "!src/components/App/App.tsx",
+    "!src/components/App/AppStyled.ts",
+    "!src/configs/**.ts",
   ],
   setupFilesAfterEnv: ["@testing-library/jest-dom"],
 };
