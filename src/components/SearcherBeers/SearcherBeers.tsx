@@ -98,15 +98,7 @@ const SearcherBeers = () => {
         </div>
       </form>
       {error && <span className="form__error">{error}</span>}
-      <h3
-        style={{
-          width: "100%",
-          borderBottom: "1px solid black",
-          paddingBottom: "10px",
-        }}
-      >
-        Our beers
-      </h3>
+      <h3 className="results-title">Our beers</h3>
       {isLoadingSearch ? (
         skeletonArray.map((skeleton: number) => <BeerSkeleton key={skeleton} />)
       ) : (

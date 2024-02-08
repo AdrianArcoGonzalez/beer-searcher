@@ -62,6 +62,11 @@ const SearcherBeersStyled = styled.section`
       font-weight: bold;
     }
   }
+  .results-title {
+    width: 100%;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+  }
 `;
 
 export default SearcherBeersStyled;
