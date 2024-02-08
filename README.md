@@ -1,6 +1,6 @@
 # Beer Explorer App
 
-Welcome to the Beer Explorer app, a delightful application crafted with Vite, React, and TypeScript. Discover a world of beers using the Punk API. The app is live on Netlify and accessible at [https://beer-shercher.netlify.app/](https://beer-shercher.netlify.app/). I've also put the code through rigorous testing using Jest.
+Welcome to the Beer Explorer app, a delightful application crafted with Vite, React, and TypeScript. Discover a world of beers using the Punk API [https://punkapi.com/documentation/v2](https://punkapi.com/documentation/v2). The app is live on Netlify and accessible at [https://beer-shercher.netlify.app/](https://beer-shercher.netlify.app/). I've also put the code through rigorous testing using Jest.
 
 ## Key Features
 
