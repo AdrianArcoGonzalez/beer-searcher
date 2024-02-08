@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import SearcherBeersStyled from "./SearcherBeersStyled";
 import { BeerStructure } from "../../interfaces/beersInterfaces";
 import useBeer from "../../hooks/useBeer/useBeer";
@@ -11,21 +11,11 @@ const SearcherBeers = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [findBy, setFindBy] = useState<"name" | "brewed">("name");
   const [beersFound, setBeersFound] = useState<BeerStructure[]>([]);
-  const { searchBeers, isLoadingSearch } = useBeer();
+  const { searchBeers, isLoadingSearch, isValidSearchString } = useBeer();
   const { handleDown, handleUp, page, setPage } = usePagination();
   const skeletonArray = Array.from({ length: 10 }, (_, i) => i);
   const [error, setError] = useState<string>("");
-
-  const isValidSearchString = (searchText: string): boolean => {
-    const regex = /^[a-zA-Z0-9\- ]+$/;
-
-    if (regex.test(searchText)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
+  const timer = useRef<NodeJS.Timeout | undefined>();
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
@@ -38,18 +28,27 @@ const SearcherBeers = () => {
   const handleSearch = useCallback(
     async (textToSearch: string, findBy: "name" | "brewed", page: number) => {
       if (!isValidSearchString(textToSearch)) {
-        setError("Invalid search string");
+        setError(
+          "Invalid search string, this must only contain letters, numbers, hyphens and spaces ",
+        );
         setBeersFound([]);
+        return;
       }
+
       const beers = await searchBeers(textToSearch, findBy, page);
 
       setBeersFound(beers);
     },
-    [searchBeers],
+    [searchBeers, isValidSearchString],
   );
 
   useEffect(() => {
-    handleSearch(searchText, findBy, page);
+    if (timer) {
+      clearTimeout(timer.current);
+    }
+    timer.current = setTimeout(() => {
+      handleSearch(searchText, findBy, page);
+    }, 600);
   }, [searchText, findBy, handleSearch, page]);
 
   useEffect(() => {
@@ -65,7 +64,7 @@ const SearcherBeers = () => {
             className={!error ? "form__input_text" : "form__input_text__error"}
             type="text"
             placeholder={
-              findBy === "brewed" ? "Use this format mm/yyyy" : "Search beers"
+              findBy === "brewed" ? "Use this format mm-yyyy" : "Search beers"
             }
             onChange={(e) => handleChange(e)}
             value={searchText}
@@ -79,7 +78,7 @@ const SearcherBeers = () => {
                 onChange={(e) => handleChangeRadio(e)}
                 value={"name"}
                 checked={findBy === "name"}
-                style={{ height: "20px", width: "20px" }}
+                className="form__input_radio"
               />
               by name
             </label>

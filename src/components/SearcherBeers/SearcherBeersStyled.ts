@@ -26,16 +26,25 @@ const SearcherBeersStyled = styled.section`
     }
   }
   .form {
-    &__input_text {
-      padding: 10px;
-      border: 1px solid black;
+    &__input {
+      &_radio {
+        height: 20px;
+        width: 20px;
+        margin-right: 10px;
+      }
 
-      &__error {
+      &_text {
         padding: 10px;
-        border-color: red;
+        border: 1px solid black;
+
+        &__error {
+          padding: 10px;
+          border: 1px solid red;
+        }
       }
     }
-    &__inputLabel {
+
+    &__ &__inputLabel {
       gap: 10px;
       display: flex;
       justify-content: center;
