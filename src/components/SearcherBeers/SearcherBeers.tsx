@@ -90,7 +90,7 @@ const SearcherBeers = () => {
                 onChange={(e) => handleChangeRadio(e)}
                 value={"brewed"}
                 checked={findBy === "brewed"}
-                style={{ height: "20px", width: "20px" }}
+                className="form__input_radio"
               />
               by brewed
             </label>

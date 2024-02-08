@@ -44,17 +44,15 @@ const SearcherBeersStyled = styled.section`
       }
     }
 
-    &__ &__inputLabel {
-      gap: 10px;
+    &__inputLabel {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-left: 10px;
     }
 
     &__radioInputsContainer {
       display: flex;
-      gap: 20px;
+      gap: 10px;
       justify-content: center;
       align-items: center;
     }
