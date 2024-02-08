@@ -3,7 +3,7 @@ import BeerSkeletonStyled from "./BeerSkeletonStyled";
 
 const BeerSkeleton = () => {
   return (
-    <BeerSkeletonStyled>
+    <BeerSkeletonStyled aria-label="skeleton">
       <div className="skeleton-container__mobile">
         <Skeleton variant="text" width={120} height={40} />
         <Skeleton variant="rectangular" width={70} height={180} />

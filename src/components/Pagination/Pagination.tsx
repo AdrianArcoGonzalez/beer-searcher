@@ -17,14 +17,16 @@ const Pagination = ({
   nextDisabled,
 }: PaginationPropsStructure) => {
   return (
-    <PaginationStyled>
+    <PaginationStyled aria-label="pagination">
       <Button
+        aria-label="previous"
         action={previousPageAction}
         text="Previous Page"
         disabled={previousDisabled}
       />
       <span className="page">{page}</span>
       <Button
+        aria-label="next"
         action={nextPageAction}
         text="Next Page"
         disabled={nextDisabled}
