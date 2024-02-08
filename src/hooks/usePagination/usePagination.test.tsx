@@ -1,16 +1,20 @@
 import { renderHook } from "@testing-library/react";
 import usePagination from "./usePagination";
-
-const mockSetState = jest.fn();
-const mockState = [1, mockSetState];
+import { useState } from "react";
+const mockState = [1, jest.fn()];
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
-  useState: mockState,
+  useState: jest.fn(),
 }));
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe("Given a usePagination customHook", () => {
   describe("when its called with method handleUp", () => {
     test("It should call the useState setter with correct page", () => {
+      (useState as jest.Mock).mockReturnValue(mockState);
       const {
         result: {
           current: { handleUp },
@@ -19,20 +23,21 @@ describe("Given a usePagination customHook", () => {
 
       handleUp(1);
 
-      expect(mockSetState).toHaveBeenCalledWith(2);
+      expect(mockState[1]).toHaveBeenCalledWith(2);
     });
   });
   describe("when its called with method handleDown", () => {
     test("It should call the useState setter with correct page", () => {
+      (useState as jest.Mock).mockReturnValue(mockState);
       const {
         result: {
-          current: { handleUp },
+          current: { handleDown },
         },
       } = renderHook(() => usePagination());
 
-      handleUp(2);
+      handleDown(2);
 
-      expect(mockSetState).toHaveBeenCalledWith(1);
+      expect(mockState[1]).toHaveBeenCalledWith(1);
     });
   });
 });
