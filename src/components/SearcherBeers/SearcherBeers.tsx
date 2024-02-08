@@ -16,6 +16,7 @@ const SearcherBeers = () => {
   const skeletonArray = Array.from({ length: 10 }, (_, i) => i);
   const [error, setError] = useState<string>("");
   const timer = useRef<NodeJS.Timeout | undefined>();
+
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
